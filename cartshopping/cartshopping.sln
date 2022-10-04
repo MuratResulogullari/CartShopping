@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "cartshopping.webui", "cartshopping.webui\cartshopping.webui.esproj", "{9205A9D8-496C-49A3-95CE-196F13E25B48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cartshopping.webapi", "cartshopping.webapi\cartshopping.webapi.csproj", "{240E4030-4940-46F8-B08C-B42EE9DF3375}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9205A9D8-496C-49A3-95CE-196F13E25B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9205A9D8-496C-49A3-95CE-196F13E25B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9205A9D8-496C-49A3-95CE-196F13E25B48}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9205A9D8-496C-49A3-95CE-196F13E25B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9205A9D8-496C-49A3-95CE-196F13E25B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9205A9D8-496C-49A3-95CE-196F13E25B48}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{240E4030-4940-46F8-B08C-B42EE9DF3375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240E4030-4940-46F8-B08C-B42EE9DF3375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240E4030-4940-46F8-B08C-B42EE9DF3375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240E4030-4940-46F8-B08C-B42EE9DF3375}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A52AF74B-281C-4E31-8724-B8A0D872F353}
+	EndGlobalSection
+EndGlobal

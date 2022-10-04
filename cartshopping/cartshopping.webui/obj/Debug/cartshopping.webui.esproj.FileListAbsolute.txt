@@ -1,0 +1,2 @@
+C:\CartShopping\cartshopping\cartshopping.webui\obj\Debug\cartshopping.webui.esproj.SuggestedBindingRedirects.cache
+C:\CartShopping\cartshopping\cartshopping.webui\obj\Debug\cartshopping.webui.esproj.CoreCompileInputs.cache
