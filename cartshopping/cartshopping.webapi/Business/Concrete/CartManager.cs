@@ -21,63 +21,6 @@ namespace cartshopping.webapi.Business.Concrete
             _cartItemsCollection = mongoDatabase.GetCollection<CartItem>(shoppingContext.Value.CartItemsCollectionName);
             _productCollection = mongoDatabase.GetCollection<Product>(shoppingContext.Value.ProductsCollectionName);
         }
-        public async Task CreateAsync(Cart entity) =>
-            await _cartsCollection.InsertOneAsync(entity);
-        public async Task<ResultViewModel<Cart>> FindAsync(string id)
-        {
-            ResultViewModel<Cart> result = new ResultViewModel<Cart>();
-            try
-            {
-                var cart = await _cartsCollection.Find(x => x.Id == id && x.IsActive).FirstOrDefaultAsync();
-                if (cart != null)
-                {
-                    result.IsSuccess = true;
-                    result.Result = cart;
-                }
-                else
-                {
-                    result.IsSuccess = false;
-                    result.Message = "Cart Bulunamadı.";
-                }
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                Console.WriteLine(ex.Message);
-                result.IsSuccess = false;
-                result.Message = "Server Error!";
-                return result;
-            }
-        }
-
-        public async Task<ResultViewModel<List<Cart>>> GetAllAsync()
-        {
-            ResultViewModel<List<Cart>> result = new ResultViewModel<List<Cart>>();
-            try
-            {
-                var carts = await _cartsCollection.Find(x => x.IsActive).ToListAsync();
-                if (carts != null)
-                {
-                    result.IsSuccess = true;
-                    result.Result = carts;
-                }
-                else
-                {
-                    result.IsSuccess = false;
-                }
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                Console.WriteLine(ex.Message);
-                result.IsSuccess = false;
-                result.Message = "Server Error!";
-                return result;
-            }
-        }
-
         public async Task<ResultViewModel<CartViewModel>> GetCartByUserId(string userId)
         {
 
@@ -104,10 +47,17 @@ namespace cartshopping.webapi.Business.Concrete
                             CartItemId = ci.Id,
                             Quantity = ci.Quantity,
                             ProductId = ci.ProductId,
-                            Product = (ProductViewModel)_productCollection.Find(x => x.Id == ci.ProductId && x.IsActive)
-
                         };
-                        cartItemsViewModel.Add(cartItemView);
+                        var product = _productCollection.Find(x => x.Id == ci.ProductId && x.IsActive).FirstOrDefault();
+                        
+                            cartItemView.Product = new ProductViewModel
+                            {
+                                Id = product.Id,
+                                ProductName =product.ProductName,
+                                Category = product.Category,
+                                Price = product.Price
+                            };
+                         cartItemsViewModel.Add(cartItemView);
                     }
 
                     cartViewModel.CartItems=cartItemsViewModel;
@@ -115,8 +65,17 @@ namespace cartshopping.webapi.Business.Concrete
                 }
                 else
                 {
+                     // create cart for user 1 to 1 relationship
+                    Cart newCart = new Cart
+                    {
+                        UserId = userId,
+                        IsActive = true,
+                        CreatedOn = DateTime.Now
+                    };
+                    await _cartsCollection.InsertOneAsync(newCart);
                     result.IsSuccess = false;
-                    result.Message = "Cart Bulunamadı.";
+                    result.Message = "Sepette ürün bulunamdı.";
+                    result.Result = new CartViewModel { Id=newCart.Id,UserId=newCart.UserId};
                 }
                 return result;
             }
@@ -130,10 +89,117 @@ namespace cartshopping.webapi.Business.Concrete
             }
 
         }
-        public async Task RemoveAsync(string id) =>
-            await _cartsCollection.DeleteOneAsync(x => x.Id == id);
-        public async Task UpdateAsync(Cart entity) =>
-            await _cartsCollection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
+        public async Task<ResultViewModel<Cart>> CreateAsync(Cart entity)
+        {
+            ResultViewModel<Cart> result = new ResultViewModel<Cart>();
+            try
+            {
+                await _cartsCollection.InsertOneAsync(entity);
+                result.IsSuccess = true;
+                result.Result = entity;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                result.IsSuccess = false;
+                result.Message = "Server Error!";
+                return result;
+            }
+        }
+        public async Task<ResultViewModel<Cart>> FindAsync(string id)
+        {
+            ResultViewModel<Cart> result = new ResultViewModel<Cart>();
+            try
+            {
+                var cart = await _cartsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+                if (cart != null)
+                {
+                    result.IsSuccess = true;
+                    result.Result = cart;
+                }
+                else
+                {
+                    result.IsSuccess = false;
+                    result.Message = "Product Bulunamadı.";
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                result.IsSuccess = false;
+                result.Message = "Server Error!";
+                return result;
+            }
+        }
+        public async Task<ResultViewModel<List<Cart>>> GetAllAsync()
+        {
+            ResultViewModel<List<Cart>> result = new ResultViewModel<List<Cart>>();
+            try
+            {
+                var carts = await _cartsCollection.Find(x => x.IsActive).ToListAsync();
+                if (carts != null)
+                {
+                    result.IsSuccess = true;
+                    result.Result = carts;
+                }
+                else
+                {
+                    result.IsSuccess = false;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                result.IsSuccess = false;
+                result.Message = "Server Error!";
+                return result;
+            }
+        }
+        public async Task<ResultViewModel> RemoveAsync(string id)
+        {
+            ResultViewModel result = new ResultViewModel();
+            try
+            {
+                await _cartsCollection.DeleteOneAsync(x => x.Id == id);
+
+                result.IsSuccess = true;
+                result.Result = id;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                result.IsSuccess = false;
+                result.Message = "Server Error!";
+                return result;
+            }
+        }
+        public async Task<ResultViewModel<Cart>> UpdateAsync(Cart entity)
+        {
+            ResultViewModel<Cart> result = new ResultViewModel<Cart>();
+            try
+            {
+                await _cartsCollection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
+                result.IsSuccess = true;
+                result.Result = entity;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                result.IsSuccess = false;
+                result.Message = "Server Error!";
+                return result;
+            }
+        }
 
     }
 }

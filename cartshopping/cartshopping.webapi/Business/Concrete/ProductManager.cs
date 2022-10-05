@@ -16,8 +16,25 @@ namespace cartshopping.webapi.Business.Concrete
             var mongoDatabase = mongoClient.GetDatabase(shoppingContext.Value.DatabaseName);
             _productsCollection = mongoDatabase.GetCollection<Product>(shoppingContext.Value.ProductsCollectionName);
         }
-        public async Task CreateAsync(Product entity) =>
-            await _productsCollection.InsertOneAsync(entity);
+        public async Task<ResultViewModel<Product>> CreateAsync(Product entity)
+        {
+            ResultViewModel<Product> result = new ResultViewModel<Product>();
+            try
+            {
+                await _productsCollection.InsertOneAsync(entity);
+                result.IsSuccess = true;
+                result.Result = entity;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                result.IsSuccess = false;
+                result.Message = "Server Error!";
+                return result;
+            }
+        }
         public async Task<ResultViewModel<Product>> FindAsync(string id)
         {
             ResultViewModel<Product> result = new ResultViewModel<Product>();
@@ -45,7 +62,6 @@ namespace cartshopping.webapi.Business.Concrete
                 return result;
             }
         }
-
         public async Task<ResultViewModel<List<Product>>> GetAllAsync()
         {
             ResultViewModel<List<Product>> result = new ResultViewModel<List<Product>>();
@@ -72,10 +88,45 @@ namespace cartshopping.webapi.Business.Concrete
                 return result;
             }
         }
-        public async Task RemoveAsync(string id) =>
-            await _productsCollection.DeleteOneAsync(x => x.Id == id);
-        public async Task UpdateAsync(Product entity) =>
-            await _productsCollection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
+        public async Task<ResultViewModel> RemoveAsync(string id)
+        {
+            ResultViewModel result = new ResultViewModel();
+            try
+            {
+                await _productsCollection.DeleteOneAsync(x => x.Id == id);
+
+                result.IsSuccess = true;
+                result.Result = id;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                result.IsSuccess = false;
+                result.Message = "Server Error!";
+                return result;
+            }
+        }
+        public async Task<ResultViewModel<Product>> UpdateAsync(Product entity)
+        {
+            ResultViewModel<Product> result = new ResultViewModel<Product>();
+            try
+            {
+                await _productsCollection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
+                result.IsSuccess = true;
+                result.Result = entity;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+                result.IsSuccess = false;
+                result.Message = "Server Error!";
+                return result;
+            }
+        }
 
     }
 }

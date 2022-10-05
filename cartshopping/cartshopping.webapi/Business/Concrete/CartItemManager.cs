@@ -4,6 +4,7 @@ using cartshopping.webapi.Entity.ViewModels;
 using cartshopping.webapi.Models.Entities;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using SharpCompress.Common;
 
 namespace cartshopping.webapi.Business.Concrete
 {
@@ -16,8 +17,15 @@ namespace cartshopping.webapi.Business.Concrete
             var mongoDatabase = mongoClient.GetDatabase(shoppingContext.Value.DatabaseName);
             _cartItemsCollection = mongoDatabase.GetCollection<CartItem>(shoppingContext.Value.CartItemsCollectionName);
         }
-        public async Task CreateAsync(CartItem entity) =>
+        public async Task<ResultViewModel<CartItem>> CreateAsync(CartItem entity)
+        {
+            ResultViewModel<CartItem> result = new ResultViewModel<CartItem>();
             await _cartItemsCollection.InsertOneAsync(entity);
+            result.IsSuccess = true;
+            result.Result = entity;
+            return result;
+        }
+          
         public async Task<ResultViewModel<CartItem>> FindAsync(string id)
         {
             ResultViewModel<CartItem> result = new ResultViewModel<CartItem>();
@@ -72,10 +80,24 @@ namespace cartshopping.webapi.Business.Concrete
                 return result;
             }
         }
-        public async Task RemoveAsync(string id) =>
+        public async Task<ResultViewModel> RemoveAsync(string id)
+        {
+            ResultViewModel result = new ResultViewModel();
             await _cartItemsCollection.DeleteOneAsync(x => x.Id == id);
-        public async Task UpdateAsync(CartItem entity) =>
+            result.IsSuccess = true;
+            return result;
+
+        }
+        
+        public async Task<ResultViewModel<CartItem>> UpdateAsync(CartItem entity)
+        {
+            ResultViewModel<CartItem> result = new ResultViewModel<CartItem>();
             await _cartItemsCollection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
+            result.IsSuccess = true;
+            result.Result = entity;
+            return result;
+
+        }
 
     }
 }

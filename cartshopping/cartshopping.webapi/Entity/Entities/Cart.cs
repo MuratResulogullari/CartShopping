@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.Text.Json.Serialization;
 
 namespace cartshopping.webapi.Models.Entities
 {
@@ -7,6 +8,7 @@ namespace cartshopping.webapi.Models.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [JsonPropertyName("id")]
         public string? Id { get; set; }
         public string UserId { get; set; } = null!;
         public bool IsActive { get; set; } = true;

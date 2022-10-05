@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace cartshopping.webapi.Models.Entities
 {
@@ -9,7 +10,8 @@ namespace cartshopping.webapi.Models.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = null!;
+        [JsonPropertyName("id")]
+        public string? Id { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string UserName { get; set; } = null!;

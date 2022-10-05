@@ -5,9 +5,9 @@ namespace cartshopping.webapi.Business.Abstract
 {
     public interface IService<T>
     {
-        Task CreateAsync(T entity);
-        Task RemoveAsync(string id);
-        Task UpdateAsync(T entity);
+        Task<ResultViewModel<T>> CreateAsync(T entity);
+        Task<ResultViewModel> RemoveAsync(string id);
+        Task<ResultViewModel<T>> UpdateAsync(T entity);
         Task<ResultViewModel<List<T>>> GetAllAsync();
         Task<ResultViewModel<T>> FindAsync(string id);
     }

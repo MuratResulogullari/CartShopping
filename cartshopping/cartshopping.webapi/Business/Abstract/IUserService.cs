@@ -5,6 +5,7 @@ namespace cartshopping.webapi.Business.Abstract
 {
     public interface IUserService:IService<User>
     {
-        Task<ResultViewModel<User>> FindAsync(string userName, string password);
+        Task<ResultViewModel<User>> FindAsync(LoginViewModel loginViewModel);
+        ResultViewModel<User> GetByUsername(string userName);
     }
 }
