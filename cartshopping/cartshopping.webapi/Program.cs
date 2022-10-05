@@ -1,8 +1,13 @@
+using cartshopping.webapi.Business.Abstract;
+using cartshopping.webapi.Business.Concrete;
+using cartshopping.webapi.Entity.Database;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<ShoppingContext>(
+    builder.Configuration.GetSection("ShoppingDatabase"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,6 +32,12 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
+builder.Services.AddScoped<IUserService, UserManager>();
+builder.Services.AddScoped<IProductService, ProductManager>();
+builder.Services.AddScoped<ICartService, CartManager>();
+builder.Services.AddScoped<ICartItemService, CartItemManager>();
+
 
 var app = builder.Build();
 

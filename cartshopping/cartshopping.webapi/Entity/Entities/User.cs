@@ -9,11 +9,11 @@ namespace cartshopping.webapi.Models.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public string Id { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string Password { get; set; } = null!;
         public bool IsActive { get; set; } =true;
         public DateTime CreatedOn { get; set; }=DateTime.Now;
 

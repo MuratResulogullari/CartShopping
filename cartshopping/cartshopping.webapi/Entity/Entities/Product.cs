@@ -3,17 +3,16 @@ using MongoDB.Bson;
 
 namespace cartshopping.webapi.Models.Entities
 {
-    public class CartItem
+    public class Product
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public int Id { get; set; }
-        public int CartId { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-        public int Quantity { get; set; }
+        public string? Id { get; set; }
+        [BsonElement("productName")]
+        public string ProductName { get; set; } = null!;
+        public decimal Price { get; set; }
+        public string Category { get; set; } = null!;
         public bool IsActive { get; set; } = true;
         public DateTime CreatedOn { get; set; } = DateTime.Now;
-
     }
 }
