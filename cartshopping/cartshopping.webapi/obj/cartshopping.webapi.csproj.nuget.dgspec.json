@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CartShopping\\cartshopping\\cartshopping.webapi\\cartshopping.webapi.csproj": {}
+    "c:\\CartShopping\\cartshopping\\cartshopping.webapi\\cartshopping.webapi.csproj": {}
   },
   "projects": {
-    "C:\\CartShopping\\cartshopping\\cartshopping.webapi\\cartshopping.webapi.csproj": {
+    "c:\\CartShopping\\cartshopping\\cartshopping.webapi\\cartshopping.webapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CartShopping\\cartshopping\\cartshopping.webapi\\cartshopping.webapi.csproj",
+        "projectUniqueName": "c:\\CartShopping\\cartshopping\\cartshopping.webapi\\cartshopping.webapi.csproj",
         "projectName": "cartshopping.webapi",
-        "projectPath": "C:\\CartShopping\\cartshopping\\cartshopping.webapi\\cartshopping.webapi.csproj",
+        "projectPath": "c:\\CartShopping\\cartshopping\\cartshopping.webapi\\cartshopping.webapi.csproj",
         "packagesPath": "C:\\Users\\gül\\.nuget\\packages\\",
-        "outputPath": "C:\\CartShopping\\cartshopping\\cartshopping.webapi\\obj\\",
+        "outputPath": "c:\\CartShopping\\cartshopping\\cartshopping.webapi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -45,6 +45,10 @@
           "targetAlias": "net6.0",
           "dependencies": {
             "Microsoft.AspNetCore.Mvc.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"
             },

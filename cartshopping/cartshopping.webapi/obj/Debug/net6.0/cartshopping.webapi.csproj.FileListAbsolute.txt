@@ -41,3 +41,6 @@ C:\CartShopping\cartshopping\cartshopping.webapi\obj\Debug\net6.0\refint\cartsho
 C:\CartShopping\cartshopping\cartshopping.webapi\obj\Debug\net6.0\cartshopping.webapi.pdb
 C:\CartShopping\cartshopping\cartshopping.webapi\obj\Debug\net6.0\cartshopping.webapi.genruntimeconfig.cache
 C:\CartShopping\cartshopping\cartshopping.webapi\obj\Debug\net6.0\ref\cartshopping.webapi.dll
+C:\CartShopping\cartshopping\cartshopping.webapi\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\CartShopping\cartshopping\cartshopping.webapi\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\CartShopping\cartshopping\cartshopping.webapi\bin\Debug\net6.0\Newtonsoft.Json.dll

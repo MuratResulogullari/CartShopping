@@ -40,6 +40,12 @@ builder.Services.AddScoped<ICartService, CartManager>();
 builder.Services.AddScoped<ICartItemService, CartItemManager>();
 
 
+// Add Cors setting for other api sends request
+builder.Services.AddCors(c => c.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyHeader().AllowAnyHeader();
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -58,7 +64,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+//app cors all
+app.UseCors("corsapp");
 app.UseAuthorization();
 
 app.MapControllers();

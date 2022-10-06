@@ -24,6 +24,10 @@ namespace cartshopping.webapi.Controllers
         public async Task<ActionResult<ResultViewModel<CartViewModel>>> GetCartAsync()
         {
             var username = Request.Cookies["username"];
+            if (username ==null)
+            {
+                username ="resuloglumurad@gmail.com";
+            }
             ResultViewModel<CartViewModel> result = new ResultViewModel<CartViewModel>();
             // User varlığının dpoğrulanması
             var resultUser =  _userService.GetByUsername(username);
@@ -44,7 +48,7 @@ namespace cartshopping.webapi.Controllers
             else
             {
                 result.IsSuccess = false;
-                result.Message = "Kullanıcı bulunamadı.";
+                result.Message = "Login olmanız gerekiyor.";
                 result.Url = "/login";
             }
             return Ok(result);

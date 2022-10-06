@@ -1,17 +1,10 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-using System.Text.Json.Serialization;
+﻿using cartshopping.webapi.Entity.Entities;
 
 namespace cartshopping.webapi.Models.Entities
 {
-    public class Cart
+    public class Cart:BaseEntity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        [JsonPropertyName("id")]
-        public string? Id { get; set; }
         public string UserId { get; set; } = null!;
-        public bool IsActive { get; set; } = true;
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+      
     }
 }
